@@ -6,5 +6,10 @@
     <TextView
         android:id="@+id/note"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
 </RelativeLayout>

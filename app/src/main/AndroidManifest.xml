@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.ListDataActivity"></activity>
+        <activity android:name=".Activities.ContactActivity"></activity>
+        <activity android:name=".Activities.FaqActivity"></activity>
+
+
 
         <activity android:name=".Activities.SplashActivity" android:theme ="@style/SplashTheme">
             <intent-filter>
@@ -22,6 +26,7 @@
         <activity android:name=".Activities.MainActivity">
 
         </activity>
+
 
     </application>
 

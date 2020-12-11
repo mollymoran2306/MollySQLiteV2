@@ -1,9 +1,14 @@
 package com.example.mollysqlitev2.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,14 +58,46 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //these 2 override methods were taken from the YouTube video Options Menu with Sub Items by Coding in Flow
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.example_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+       switch (item.getItemId()) {
+           case R.id.Home:
+              // Toast.makeText(this, "Item 1 selectted", Toast.LENGTH_SHORT).show();
+               Intent intent = new Intent(MainActivity.this, MainActivity.class);
+               startActivity(intent);
+               return true;
+           case R.id.faq:
+              // Toast.makeText(this, "Sub Item 1 selectted", Toast.LENGTH_SHORT).show();
+               Intent intent2 = new Intent(MainActivity.this, FaqActivity.class);
+               startActivity(intent2);
+               return true;
+           case R.id.contact:
+              // Toast.makeText(this, "Sub Item 2 selectted", Toast.LENGTH_SHORT).show();
+               Intent intent3 = new Intent(MainActivity.this, ContactActivity.class);
+               startActivity(intent3);
+               return true;
+           default: return super.onOptionsItemSelected(item);
+       }
+
+
+    }
+
     public void AddData(String newEntry) {
         //This method returns a toast. If the data was successfully saved to the database then the toast will tell the user it was successful, otherwise
         //they will be notified that something went wrong
        boolean insertData = mDatabaseHelper.addData(newEntry);
        if (insertData) {
-           toastMessage("Data Successfully Inserted!");
+           toastMessage("Item Added to Shopping List!");
        } else {
-           toastMessage("Sorry, Something went Wrong");
+           toastMessage("Sorry, Please Try Again");
        }
 
     }

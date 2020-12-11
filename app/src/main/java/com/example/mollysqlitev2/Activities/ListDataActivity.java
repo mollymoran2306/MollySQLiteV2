@@ -1,9 +1,16 @@
 package com.example.mollysqlitev2.Activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,46 +46,65 @@ public class ListDataActivity extends AppCompatActivity {
         mAdapter = new ShoppingAdapter(this, notesList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         recyclerView.setAdapter(mAdapter);
 
     }
 
-    private void createNote(String note) {
-        // inserting note in db and getting
-        // newly inserted note id
-        long id = db.insertNote(note);
-
-        // get the newly inserted note from db
-        Shopping n = db.getNote(id);
-
-        if (n != null) {
-            // adding new note to array list at 0 position
-            notesList.add(0, n);
-
-            // refreshing the list
-            mAdapter.notifyDataSetChanged();
-
-           // toggleEmptyNotes();
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.example_menu, menu);
+        return true;
     }
 
 
 
-//    private void populateListView() {
-//        Log.d(TAG, "populateListView: Displaying data in the ListView");
-//
-//
-//        Cursor data = mDatabaseHelper.getData();
-//        ArrayList<String> listData = new ArrayList<>();
-//        //creating a loop that will loop through the database and add the values to an array
-//        while(data.moveToNext()) {
-//            listData.add(data.getString(1));
-//        }
-//        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-//        //setting the adapter to the listview on the layout, to display the values from the shopping list
-//        mListView.setAdapter(adapter);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Home:
+                // Toast.makeText(this, "Item 1 selectted", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ListDataActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.faq:
+                // Toast.makeText(this, "Sub Item 1 selectted", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(ListDataActivity.this, FaqActivity.class);
+                startActivity(intent2);
+                return true;
+            case R.id.contact:
+                // Toast.makeText(this, "Sub Item 2 selectted", Toast.LENGTH_SHORT).show();
+                Intent intent3 = new Intent(ListDataActivity.this, ContactActivity.class);
+                startActivity(intent3);
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+
+
+    }
+
+  //  private void createNote(String note) {
+        // inserting note in db and getting
+        // newly inserted note id
+     //   long id = db.insertNote(note);
+
+        // get the newly inserted note from db
+     //   Shopping n = db.getNote(id);
+
+     //   if (n != null) {
+            // adding new note to array list at 0 position
+     //       notesList.add(0, n);
+
+            // refreshing the list
+     //       mAdapter.notifyDataSetChanged();
+
+           // toggleEmptyNotes();
+  //      }
+  //  }
+
+
 
     private void toastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
