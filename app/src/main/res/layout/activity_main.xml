@@ -22,25 +22,53 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_marginTop="30dp"
+        android:layout_width="365dp"
+        android:layout_height="231dp"
         android:layout_below="@+id/relativeLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="8dp">
 
         <Button
-            android:layout_marginLeft="70dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/btnAdd"
-            android:text="@string/add"/>
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:background="@drawable/custom_button"
+            android:text="@string/add"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/btnView"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/btnAdd"
+            android:background="@drawable/custom_button"
+            android:text="@string/view_list"
+            android:textColor="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/voiceBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/btnAdd"
-            android:text="@string/view_list" />
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_mic" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="123dp"
+
+            android:layout_below="@+id/voiceBtn"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="253dp"
+            android:layout_marginBottom="40dp"
+            android:text="Tip: Press the microphone icon to add an item using text to speech!" />
+
 
     </RelativeLayout>
 

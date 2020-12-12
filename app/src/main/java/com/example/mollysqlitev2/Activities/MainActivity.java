@@ -1,21 +1,37 @@
 package com.example.mollysqlitev2.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+
+
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.speech.RecognitionListener;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
+import android.view.View.OnClickListener;
+import android.speech.tts.TextToSpeech;
+import android.content.Intent;
+
+
+
 
 import com.example.mollysqlitev2.Database.DatabaseHelper;
 import com.example.mollysqlitev2.R;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 //Coding with Mitch: Save data into SQLite Database
 
@@ -23,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseHelper mDatabaseHelper;
     private Button btnAdd, btnViewData;
     private EditText editText;
+    ImageButton mVoiceBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.editText);
         btnAdd = findViewById(R.id.btnAdd);
         btnViewData = findViewById(R.id.btnView);
+        mVoiceBtn = findViewById(R.id.voiceBtn);
         mDatabaseHelper = new DatabaseHelper(this);
 
         //Adding the item to the SQLite Database when the user clicks the "Add" button
@@ -54,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
                 //This intent brings the user to the ListDataActivity where the shopping list is displayed
                 Intent intent = new Intent(MainActivity.this, ListDataActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        mVoiceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speak();
             }
         });
     }
@@ -109,4 +134,34 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
     }
+
+    private static final int SPEECH_REQUEST_CODE = 0;
+
+    //code for this method taken from Speech to Text - Android Studio - Java video on Youtube by Atif Pervaiz
+    private void speak() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM) ;
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak the Item");
+
+        startActivityForResult(intent, SPEECH_REQUEST_CODE);
+
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case SPEECH_REQUEST_CODE: {
+                if (resultCode == RESULT_OK && null!=data) {
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    editText.setText(result.get(0));
+                }
+
+            }
+        }
+    }
+
 }
